@@ -14,14 +14,8 @@ const firebaseTemplate = fs.readFileSync(path.resolve(__dirname, 'firebase.templ
 // Replace the placeholder with the actual backend URL
 const firebaseConfig = firebaseTemplate.replace('$BASE_URL', process.env.BASE_URL);
 
-// Specify the path to the public folder
-const publicFolderPath = path.resolve(__dirname, 'mysite', 'public');
-
 // Write the result to firebase.json
-const firebaseJsonPath = path.resolve(__dirname, 'firebase.json');
+const firebaseJsonPath = path.resolve(__dirname, 'mysite', 'firebase.json');
 fs.writeFileSync(firebaseJsonPath, firebaseConfig);
 
-// Output the generated firebase.json path
-console.log(`firebase.json has been generated with the backend URL.`);
-console.log(`Public folder path: ${publicFolderPath}`);
-console.log(`Firebase.json path: ${firebaseJsonPath}`);
+console.log('firebase.json has been generated with the backend URL.');

@@ -9,7 +9,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "https://8000-idx-demo-1717677768775.cluster-blu4edcrfnajktuztkjzgyxzek.cloudworkstations.dev"
+        "destination": "undefined"
       }
     ]
   }
