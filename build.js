@@ -15,7 +15,7 @@ const firebaseTemplate = fs.readFileSync(path.resolve(__dirname, 'firebase.templ
 const firebaseConfig = firebaseTemplate.replace('$BASE_URL', process.env.BASE_URL);
 
 // Write the result to firebase.json
-const firebaseJsonPath = path.resolve(__dirname, 'mysite', 'firebase.json');
+const firebaseJsonPath = path.resolve(__dirname, 'firebase.json');
 fs.writeFileSync(firebaseJsonPath, firebaseConfig);
 
 console.log('firebase.json has been generated with the backend URL.');
