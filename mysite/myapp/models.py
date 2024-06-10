@@ -1,5 +1,6 @@
 from django.db import models
 
+# Not using Django's ORM for now since we're using Firestore 
 class Dummy(models.Model):
     attributeA = models.CharField(max_length=99)
     attributeB = models.IntegerField()

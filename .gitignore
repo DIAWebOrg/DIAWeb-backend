@@ -1,6 +1,7 @@
 .venv
 __pycache__
 .env
+firebase_config.json
 
 # Logs
 logs
