@@ -29,7 +29,6 @@ SECRET_KEY = 'django-insecure-^=6-_k)oh!n9-fpcd1qd0rf(!8y2!!8cc*so1if(!*ydv@*_dc
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "diaweb-backend.web.app",
     "127.0.0.1"
 ]
 
@@ -82,10 +81,20 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# Initialize environment variables
+env = environ.Env()
+
+# Read .env file
+environ.Env.read_env()
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.krkksxpwbolgqoynscyh',
+        'PASSWORD': env.str('DB_PASSWORD'),
+        'HOST': 'aws-0-eu-west-2.pooler.supabase.com',
+        'PORT': '6543',
     }
 }
 
@@ -136,17 +145,11 @@ MODEL_PATH = os.path.join(BASE_DIR, 'myapp/keras/model.keras')
 # Load the model
 MODEL = load_model(MODEL_PATH)
 
-# Initialize environment variables
-env = environ.Env()
-
-# Read .env file
-environ.Env.read_env()
-
 SECRET_KEY = env.str('SECRET_KEY')
 
 # Retrieve the CORS_ALLOWED_ORIGINS from the environment variable
 CORS_ALLOWED_ORIGINS = [
-    env('BASE_URL'), # myself
-    "https://4200-idx-diaweb-frontend-1717965185888.cluster-blu4edcrfnajktuztkjzgyxzek.cloudworkstations.dev" # frontend
+    env.str('BASE_URL'), # myself
+    env.str('FRONTEND_URL'), # frontend
     ]
 BASE_URL = env.str('BASE_URL')
