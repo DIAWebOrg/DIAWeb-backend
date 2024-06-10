@@ -28,8 +28,10 @@ SECRET_KEY = 'django-insecure-^=6-_k)oh!n9-fpcd1qd0rf(!8y2!!8cc*so1if(!*ydv@*_dc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    "diaweb-backend.web.app",
+    "127.0.0.1"
+]
 
 # Application definition
 
@@ -140,6 +142,11 @@ env = environ.Env()
 # Read .env file
 environ.Env.read_env()
 
+SECRET_KEY = env.str('SECRET_KEY')
+
 # Retrieve the CORS_ALLOWED_ORIGINS from the environment variable
-CORS_ALLOWED_ORIGINS = env.list('BASE_URL')
+CORS_ALLOWED_ORIGINS = [
+    env('BASE_URL'), # myself
+    "https://4200-idx-diaweb-frontend-1717965185888.cluster-blu4edcrfnajktuztkjzgyxzek.cloudworkstations.dev" # frontend
+    ]
 BASE_URL = env.str('BASE_URL')
