@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mysite.wsgi.app'
+WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
 # Database
@@ -154,3 +154,20 @@ CORS_ALLOWED_ORIGINS = [
     env.str('FRONTEND_URL'), # frontend
     ]
 BASE_URL = env.str('BASE_URL')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}
