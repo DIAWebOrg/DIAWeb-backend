@@ -88,7 +88,6 @@ supafunc==0.4.6
 tensorboard==2.16.2
 tensorboard-data-server==0.7.2
 tensorflow==2.16.1
-tensorflow-io-gcs-filesystem==0.37.0
 termcolor==2.4.0
 tomlkit==0.12.5
 typing_extensions==4.12.2
