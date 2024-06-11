@@ -15,6 +15,9 @@ import os
 from tensorflow.keras.models import load_model
 from django.core.wsgi import get_wsgi_application
 import environ
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,14 +47,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',  
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -89,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres.krkksxpwbolgqoynscyh',
-        'PASSWORD': env.str('DB_PASSWORD'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': 'aws-0-eu-west-2.pooler.supabase.com',
         'PORT': '6543',
     }
@@ -142,13 +145,19 @@ MODEL_PATH = os.path.join(BASE_DIR, 'myapp/keras/model.keras')
 # Load the model
 MODEL = load_model(MODEL_PATH)
 
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # Retrieve the CORS_ALLOWED_ORIGINS from the environment variable
-
+'''
 CORS_ALLOWED_ORIGINS = [
-    env.str('BASE_URL'), # myself
-    env.str('FRONTEND_URL'), # frontend
+    os.getenv('BASE_URL'), # myself
+    'https://4200-idx-diaweb-frontend-1717965185888.cluster-blu4edcrfnajktuztkjzgyxzek.cloudworkstations.dev', # frontend
     ]
+'''
+CORS_ORIGIN_WHITELIST = (
+    'https://4200-idx-diaweb-frontend-1717965185888.cluster-blu4edcrfnajktuztkjzgyxzek.cloudworkstations.dev',
+)
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
-BASE_URL = env.str('BASE_URL')
+BASE_URL = os.getenv('BASE_URL')
