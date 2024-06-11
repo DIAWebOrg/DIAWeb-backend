@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',  
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -148,16 +148,16 @@ MODEL = load_model(MODEL_PATH)
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # Retrieve the CORS_ALLOWED_ORIGINS from the environment variable
-'''
+
 CORS_ALLOWED_ORIGINS = [
     os.getenv('BASE_URL'), # myself
-    'https://4200-idx-diaweb-frontend-1717965185888.cluster-blu4edcrfnajktuztkjzgyxzek.cloudworkstations.dev', # frontend
+    os.getenv('FRONTEND_URL'), # frontend
     ]
-'''
-CORS_ORIGIN_WHITELIST = (
-    'https://4200-idx-diaweb-frontend-1717965185888.cluster-blu4edcrfnajktuztkjzgyxzek.cloudworkstations.dev',
-)
-CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ORIGIN_WHITELIST = [
+    os.getenv('FRONTEND_URL')
+    ]
+
 CORS_ALLOW_CREDENTIALS = True
 
 BASE_URL = os.getenv('BASE_URL')
