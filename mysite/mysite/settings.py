@@ -22,9 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^=6-_k)oh!n9-fpcd1qd0rf(!8y2!!8cc*so1if(!*ydv@*_dc'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -149,8 +146,10 @@ MODEL = load_model(MODEL_PATH)
 SECRET_KEY = env.str('SECRET_KEY')
 
 # Retrieve the CORS_ALLOWED_ORIGINS from the environment variable
+
 CORS_ALLOWED_ORIGINS = [
     env.str('BASE_URL'), # myself
     env.str('FRONTEND_URL'), # frontend
     ]
+
 BASE_URL = env.str('BASE_URL')
