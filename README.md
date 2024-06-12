@@ -23,7 +23,8 @@ DIAWeb is a web application that allows the user to calculate their risk of suff
 
 ## Project structure
 
-- `.idx`: Contains the file to build the development environment using nix package manager
+- `.github/`: Contains dependabot configuration along with workflow file
+- `.idx/`: Contains the file to build the development environment using nix package manager
 - `mysite/`: This directory contains the source code of the project
   - `mysite/`: Common Python files for all the apps, includings `settings.py` and `urls.py`
   - `myapp/`: App specific files, including test files, models, views and scripts to build and model the neural network
