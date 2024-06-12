@@ -36,6 +36,7 @@ DIAWeb is a web application that allows the user to calculate their risk of suff
 - `LICENSE.md`: MIT license of the project
 - `CODE_OF_CONDUCT.md`: Behavioural guidelines for contributors
 - `README.md`: A briefing of the project and how to run it
+- `SECURITY.md`: Briefing of the security policy
 - `devserver.sh`: Boot file to run the project
 - `init_supabase.py`: Script to initialize supabase database
 - `requirements.txt`: List of Python dependencies of the project
