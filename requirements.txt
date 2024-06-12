@@ -49,7 +49,7 @@ markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 mccabe==0.7.0
 mdurl==0.1.2
-ml-dtypes==0.3.2
+ml-dtypes==0.2.0
 msgpack==1.0.8
 namex==0.0.8
 numpy==1.26.4
