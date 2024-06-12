@@ -1,8 +1,9 @@
-from django.test import TestCase, Client
+from django.test import TransactionTestCase, Client
 from rest_framework import status
+from django.db import connection
 import json
 
-class PredictDigitsTest(TestCase):
+class PredictDigitsTest(TransactionTestCase):
     def setUp(self):
         self.client = Client()
 
