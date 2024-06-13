@@ -2,7 +2,8 @@
 
 # DIAWeb backend
 
-[![Django Tests](https://github.com/Pablo-Caballero-Maria/DIAWeb-backend/actions/workflows/main.yaml/badge.svg)](https://github.com/Pablo-Caballero-Maria/DIAWeb-backend/actions/workflows/main.yaml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DIAWebOrg_DIAWeb-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DIAWebOrg_DIAWeb-backend)
+[![Django Tests](https://github.com/DIAWebOrg/DIAWeb-backend/actions/workflows/main.yaml/badge.svg)](https://github.com/DIAWebOrg/DIAWeb-backend/actions/workflows/main.yaml)
 ![Python](https://img.shields.io/badge/python-3.11-blue)
 ![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/status-alpha-orange)
