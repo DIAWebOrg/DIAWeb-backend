@@ -13,9 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from tensorflow.keras.models import load_model
-from django.core.wsgi import get_wsgi_application
 import environ
 from dotenv import load_dotenv
+import pandas as pd
 
 load_dotenv()
 
@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -144,6 +144,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MODEL_PATH = os.path.join(BASE_DIR, 'myapp/keras/model.keras')
 # Load the model
 MODEL = load_model(MODEL_PATH)
+
+DATAFRAME_PATH = os.path.join(BASE_DIR, 'myapp/keras/base_dts.xlsx')
+DATAFRAME = pd.read_excel(DATAFRAME_PATH)
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
