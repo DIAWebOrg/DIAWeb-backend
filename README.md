@@ -2,6 +2,7 @@
 
 # DIAWeb backend
 
+![Django](https://img.shields.io/badge/Django-green?style=flat-square&logo=django&logoColor=white)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DIAWebOrg_DIAWeb-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DIAWebOrg_DIAWeb-backend)
 [![Django Tests](https://github.com/DIAWebOrg/DIAWeb-backend/actions/workflows/main.yaml/badge.svg)](https://github.com/DIAWebOrg/DIAWeb-backend/actions/workflows/main.yaml)
 ![Python](https://img.shields.io/badge/python-3.11-blue)
