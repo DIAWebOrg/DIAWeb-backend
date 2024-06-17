@@ -16,9 +16,9 @@ class PredictDiabetesAPIView(APIView):
         responses={200: "Success"},
         tags=["Predict"],
     )
+
     def post(self, request):
         serializer = Serializer(data=request.data)
-        print(serializer.is_valid())
         if serializer.is_valid():
             data = serializer.validated_data['data']
             data = np.array(data).astype('float32').reshape(1, -1)
@@ -27,7 +27,7 @@ class PredictDiabetesAPIView(APIView):
             prediction = settings.MODEL.predict(data)
 
             return Response({'prediction': prediction})
-        return Response(serializer.errors, status=400)
+        return Response({'errors': serializer.errors}, status=400)
 
 
 class IndexView(APIView):

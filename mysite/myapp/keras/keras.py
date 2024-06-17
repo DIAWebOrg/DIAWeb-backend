@@ -1,9 +1,9 @@
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler # type: ignore 
+from sklearn.model_selection import train_test_split # type: ignore 
 import tensorflow as tf
-from tensorflow.keras.models import Sequential  # ignore IDE warning
-from tensorflow.keras.layers import Dense, Dropout, BatchNormalization # ignore IDE warning
-from tensorflow.keras import Input
+from tensorflow.keras.models import Sequential  # type: ignore 
+from tensorflow.keras.layers import Dense, Dropout, BatchNormalization # type: ignore 
+from tensorflow.keras import Input # type: ignore 
 import keras_tuner as kt
 import numpy as np
 from django.conf import settings
