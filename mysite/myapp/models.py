@@ -14,4 +14,6 @@ class Dummy(models.Model):
         app_label = 'myapp'
 
 class APIKey(models.Model):
-    key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    # in the normal database, the object APIKey has an attribute api_key
+    # in the cache database, the key is api_key_info:{api_key}
+    api_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
