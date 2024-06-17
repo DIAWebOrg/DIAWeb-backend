@@ -13,7 +13,9 @@ class Dummy(models.Model):
     class Meta:
         app_label = 'myapp'
 
+# although i rely on cache database, having an object is used in the test and in createapikey
+# to generate a new the UUID
 class APIKey(models.Model):
     # in the normal database, the object APIKey has an attribute api_key
-    # in the cache database, the key is api_key_info:{api_key}
+    # in the cache database, the key is cache_key:{api_key}
     api_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)

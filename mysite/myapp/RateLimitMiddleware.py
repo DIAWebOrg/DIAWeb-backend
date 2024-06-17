@@ -1,12 +1,11 @@
 from django.core.cache import cache
 from django.http import JsonResponse
-from .models import APIKey
 import uuid
 import os
+import re
 
-# this middleware executes before the view
-
-
+# this middleware executes before the view. it doesnt acces the normal database (slow) but the cache (faster)
+# if the server restarts, the cache is cleared so in production that should not happen
 class RateLimitMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -17,35 +16,30 @@ class RateLimitMiddleware:
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         api_key = request.META.get('HTTP_X_API_KEY')  # normal (no prefix)
+        response, cache_key = is_valid_api_key(api_key)
 
-        if not api_key:
-            return JsonResponse({'error': 'API key required'}, status=401)
-        # check valid format, existence and rate limit
-        try:
-            uuid.UUID(api_key)
-        except ValueError:
-            return JsonResponse({'error': 'Invalid API key format'}, status=400)
-
-        try:
-            # present in headers but not in the database
-            _ = APIKey.objects.get(api_key=api_key)
-        except APIKey.DoesNotExist:
-            return JsonResponse({'error': 'Invalid API key'}, status=401)
-
-         # Bypass rate limiting for the test api key
-        if api_key == os.getenv('API_KEY_TEST'):
-            return None
-
-        # Implement rate limiting
-        rate_limit_key = f"api_key_info:{api_key}"
-        # 0 is the default value if the key is not found
-        remaining_requests = cache.get(rate_limit_key, 0)
-
-        # Allow up to 2 requests
-        if remaining_requests <= 0:
-            return JsonResponse({'error': 'Rate limit exceeded'}, status=429)
-
-        # Update the request count
-        cache.decr(rate_limit_key)
+        if response != True:
+            return response
+        cache.decr(cache_key)
 
         return None
+
+def is_valid_api_key(api_key):
+    response = True
+    cache_key = None
+    # Regex pattern for UUID version 4
+    uuid_regex = re.compile(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89ABab][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$')
+    
+    if not api_key:
+        response = JsonResponse({'error': 'API key required'}, status=401)
+    elif not uuid_regex.match(api_key):
+        response = JsonResponse({'error': 'Invalid API key format'}, status=400)
+    elif api_key != os.getenv('API_KEY_TEST'):
+        cache_key = f"cache_key:{api_key}"
+        remaining_requests = cache.get(cache_key)
+        print(cache_key)
+        if remaining_requests is None:
+            response = JsonResponse({'error': 'API key not found'}, status=404)
+        elif remaining_requests <= 0:
+            response = JsonResponse({'error': 'Rate limit exceeded'}, status=429)
+    return response, cache_key
