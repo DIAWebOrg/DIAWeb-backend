@@ -16,13 +16,16 @@ class RateLimitMiddleware:
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         api_key = request.META.get('HTTP_X_API_KEY')  # normal (no prefix)
-        response, cache_key = is_valid_api_key(api_key)
 
-        if response != True:
-            return response
-        cache.decr(cache_key)
-
-        return None
+        if api_key == os.getenv('API_KEY_TEST'):
+            return None     
+        else:
+            response, cache_key = is_valid_api_key(api_key)
+            if response != True:
+                return response
+            else:
+                cache.decr(cache_key)
+                return None
 
 def is_valid_api_key(api_key):
     response = True
@@ -34,12 +37,13 @@ def is_valid_api_key(api_key):
         response = JsonResponse({'error': 'API key required'}, status=401)
     elif not uuid_regex.match(api_key):
         response = JsonResponse({'error': 'Invalid API key format'}, status=400)
-    elif api_key != os.getenv('API_KEY_TEST'):
+    else:
         cache_key = f"cache_key:{api_key}"
         remaining_requests = cache.get(cache_key)
-        print(cache_key)
+
         if remaining_requests is None:
             response = JsonResponse({'error': 'API key not found'}, status=404)
         elif remaining_requests <= 0:
             response = JsonResponse({'error': 'Rate limit exceeded'}, status=429)
+    
     return response, cache_key
