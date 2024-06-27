@@ -16,6 +16,8 @@ class Dummy(models.Model):
 # although i rely on cache database, having an object is used in the test and in createapikey
 # to generate a new the UUID
 class APIKey(models.Model):
-    # in the normal database, the object APIKey has an attribute api_key
-    # in the cache database, the key is cache_key:{api_key}
     api_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    remaining_requests = models.IntegerField(default=5)
+
+    def __str__(self):
+        return f'{self.api_key} - {self.remaining_requests}'

@@ -12,10 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-from tensorflow.keras.models import load_model # type: ignore
+from tensorflow.keras.models import load_model  # type: ignore
 import environ
 from dotenv import load_dotenv
 import pandas as pd
+from corsheaders.defaults import default_headers
 
 load_dotenv()
 
@@ -58,12 +59,6 @@ MIDDLEWARE = [
     'myapp.RateLimitMiddleware.RateLimitMiddleware',
 ]
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'django_cache',
-    }
-}
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -161,13 +156,13 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # Retrieve the CORS_ALLOWED_ORIGINS from the environment variable
 
 CORS_ALLOWED_ORIGINS = [
-    os.getenv('BASE_URL'), # myself
-    os.getenv('FRONTEND_URL'), # frontend
-    ]
+    os.getenv('BASE_URL'),  # myself
+    os.getenv('FRONTEND_URL'),  # frontend
+]
 
-CORS_ORIGIN_WHITELIST = [
-    os.getenv('FRONTEND_URL')
-    ]
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'X-API-KEY',
+]
 
 CORS_ALLOW_CREDENTIALS = True
 
