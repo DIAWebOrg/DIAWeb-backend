@@ -75,7 +75,7 @@ source venv/bin/activate
 Once the virtual environment is activated, you can install the project's dependencies using the `requirements.txt` file. Run the following command:
 
 ```bash
-pip install -r requirements.txt
+poetry install
 ```
 
 This will install all the necessary packages for this project.
