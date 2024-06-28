@@ -25,6 +25,7 @@ jobs:
       run: |
         mkdir -p mysite/myapp/keras
         curl -H "Authorization: token $TOKEN" -L "https://raw.githubusercontent.com/Pablo-Caballero-Maria/DIAWeb-model/main/model.keras" -o mysite/myapp/keras/model.keras
+        curl -H "Authorization: token $TOKEN" -L "https://raw.githubusercontent.com/Pablo-Caballero-Maria/DIAWeb-model/main/base_dts.xlsx" -o mysite/myapp/keras/base_dts.xlsx
 
     - name: Configure Poetry
       run: |
