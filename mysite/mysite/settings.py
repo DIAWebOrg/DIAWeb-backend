@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-from tensorflow.keras.models import load_model  # type: ignore
+from tensorflow.keras.models import load_model   # type: ignore
 import environ
 from dotenv import load_dotenv
 import pandas as pd

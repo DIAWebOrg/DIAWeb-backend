@@ -19,7 +19,7 @@ jobs:
       run: |
         curl -sSL https://install.python-poetry.org | python3 -
 
-    - name: Download model.keras from private repo
+    - name: Download keras files from private repo
       env:
         TOKEN: ${{ secrets.MODEL_REPO_TOKEN }}
       run: |

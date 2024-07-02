@@ -9,7 +9,7 @@ from .models import APIKey
 class PredictDiabetesTest(TransactionTestCase):
     def setUp(self):
         self.client = Client()
-        # this doesnt have an impact on the real database/cache database
+        # this doesnt have an impact on the real database
         APIKey.objects.create(api_key=settings.API_KEY_TEST)
 
     def test_predict_diabetes_post(self):

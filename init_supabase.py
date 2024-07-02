@@ -14,7 +14,7 @@ def initialize_supabase():
         print("Please set the SUPABASE_URL and SUPABASE_KEY environment variables in the .env file.")
         return
 
-    supabase = create_client(url, key)
+    _ = create_client(url, key)
 
     print('Supabase client initialized successfully!')
 
