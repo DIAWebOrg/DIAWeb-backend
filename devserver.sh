@@ -1,2 +1,4 @@
 #!/bin/sh
-poetry run python mysite/manage.py runserver $PORT
+cd /mysite
+echo "Starting Daphne server on port $PORT..."
+poetry run daphne -p $PORT mysite.asgi:application
