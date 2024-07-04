@@ -34,7 +34,7 @@ class PredictDiabetesTest(TransactionTestCase):
                     else value for value in second_row.tolist()]
 
         # After establishing the connection and sending the data
-        await communicator.send_json_to({'data': features})
+        await communicator.send_json_to({'data': features, 'action': 'predict_diabetes'})
 
         # Wait for the connection accepted message 
         connection_response = await communicator.receive_json_from()
