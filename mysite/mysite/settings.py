@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -155,10 +155,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 CORS_ALLOWED_ORIGINS = [
     os.getenv('BASE_URL'),  # myself
     os.getenv('FRONTEND_URL'),  # frontend
-]
-
-CORS_ALLOW_HEADERS = list(default_headers) + [
-    'X-API-KEY',
 ]
 
 CORS_ALLOW_CREDENTIALS = True

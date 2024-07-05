@@ -17,22 +17,27 @@ class DiabetesPredictionConsumer(AsyncWebsocketConsumer):
         pass
 
     async def receive(self, text_data):
-
         text_data_json = json.loads(text_data)
 
         action = text_data_json.get('action')
         api_key = text_data_json.get('api_key')
 
-        evaluation_result = await evaluate_api_key(api_key, decrement=True)
+        isPrediction = action == 'predict_diabetes'
+        evaluation_result = await evaluate_api_key(api_key, isPrediction)
+        # handle the evaluation result if its an error:
+        if 'error' in evaluation_result:
+            await self.send(text_data=json.dumps(evaluation_result))
+            return
+        
         remaining_requests = evaluation_result['remaining_requests']
 
-        if action == 'check_remaining_requests':
+        if isPrediction:
+            await self.predict_diabetes(text_data_json, remaining_requests)
+
+        else:
             await self.send(text_data=json.dumps({
                 'remaining_requests': remaining_requests
             }))
-
-        elif action == 'predict_diabetes':
-            await self.predict_diabetes(text_data_json, remaining_requests)
 
     async def predict_diabetes(self, text_data_json, remaining_requests):
         data = text_data_json.get('data')
@@ -59,7 +64,7 @@ class DiabetesPredictionConsumer(AsyncWebsocketConsumer):
 
 
 @database_sync_to_async
-def evaluate_api_key(api_key, decrement):
+def evaluate_api_key(api_key, isPrediction):
     # Regex pattern for UUID
     uuid_regex = re.compile(
         r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89ABab][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$')
@@ -80,7 +85,7 @@ def evaluate_api_key(api_key, decrement):
                 return {'error': 'Rate limit exceeded', 'status': 429}
 
             else:
-                if decrement:
+                if isPrediction:
                     api_key.remaining_requests -= 1
                     api_key.save()
                 return {'remaining_requests': api_key.remaining_requests, 'status': 200}
