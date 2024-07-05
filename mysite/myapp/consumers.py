@@ -43,7 +43,7 @@ class DiabetesPredictionConsumer(AsyncWebsocketConsumer):
         data = text_data_json.get('data')
         serializer = Serializer(data=text_data_json)
 
-        if data and serializer.is_valid() and remaining_requests > 0:
+        if data and serializer.is_valid():
             data = serializer.validated_data['data']  # type: ignore
             data = np.array(data).astype('float32').reshape(1, -1)
             # tensorflow keras does not natively support asyncronous operations, so
