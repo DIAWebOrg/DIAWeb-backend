@@ -11,7 +11,6 @@ class DiabetesPredictionConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        print('channel_name:', self.channel_name)
         text_data_json['channel_name'] = self.channel_name
         redis_client.xadd('diabetes_predictions', text_data_json)
 

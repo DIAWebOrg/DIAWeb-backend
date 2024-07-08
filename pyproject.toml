@@ -105,6 +105,7 @@ celery = "^5.4.0"
 redis = "^5.0.7"
 filelock = "^3.15.4"
 channels-redis = "^4.2.0"
+gevent = "^24.2.1"
 
 
 [build-system]

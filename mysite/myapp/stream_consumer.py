@@ -8,7 +8,7 @@ except ImportError:
 from celery import chain
 
 def main():
-
+    print('Starting stream consumer')
     while True:
         # Read from the stream
         messages = redis_client.xread({'diabetes_predictions': '$'}, block=1000, count=1)
