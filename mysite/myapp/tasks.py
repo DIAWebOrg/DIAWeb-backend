@@ -51,7 +51,6 @@ def evaluate_api_key(api_key, isPrediction):
 
             else:
                 if isPrediction:
-                    # TODO: migrate to postgre
                     api_key_obj.remaining_requests -= 1
                     api_key_obj.save()
 

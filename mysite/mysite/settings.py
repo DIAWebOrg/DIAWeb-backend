@@ -12,14 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-from re import X
 from tensorflow.keras.models import load_model   # type: ignore
-import environ
 from dotenv import load_dotenv
 import pandas as pd
-from corsheaders.defaults import default_headers
 
-# load_dotenv()
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,16 +82,14 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# Initialize environment variables
-# env = environ.Env()
-
-# Read .env file
-# env.read_env()
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'diawebdb',
+        'USER': 'diawebuser',
+        'PASSWORD': 'diawebuser',
+        'HOST': 'localhost',  
+        'PORT': '5432',
     }
 }
 
@@ -166,14 +161,14 @@ API_KEY_TEST = os.getenv('API_KEY_TEST')
 
 ASGI_APPLICATION = 'mysite.asgi.application'
 
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('localhost', 6379)],
         },
     },
 }
