@@ -1,3 +1,5 @@
 __pycache__
 /mysite/myapp/keras/
 /mysite/mysite/.env
+/mysite/key.pem
+/mysite/cert.pem

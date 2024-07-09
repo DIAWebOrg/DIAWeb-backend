@@ -1,4 +1,5 @@
 @echo off
 cd .\mysite
-start poetry run daphne -e ssl:8001:privateKey=key.pem:certKey=cert.pem mysite.asgi:application
-start poetry run celery -A mysite worker -l info -P gevent
+:: start /b poetry run daphne --endpoint ssl:8000:privateKey=key.pem:certKey=cert.pem mysite.asgi:application
+start /b poetry run daphne --port 8000 mysite.asgi:application
+start /b poetry run celery --app mysite worker --loglevel info --pool gevent

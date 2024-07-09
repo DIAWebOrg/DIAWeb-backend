@@ -46,7 +46,7 @@ jobs:
 
     - name: Run tests
       run: |
-        cd mysite && poetry run python manage.py test --keepdb
+        cd mysite && poetry run python manage.py test
       env:
         BASE_URL: http://127.0.0.1:8000
         FRONTEND_URL: http://localhost:4200

@@ -63,7 +63,6 @@ def evaluate_api_key(api_key, isPrediction):
 def process_task_result(result, channel_name):
     # send the task result asynchronously back to the WebSocket client
     channel_layer = get_channel_layer()
-
     async_to_sync(channel_layer.send)(channel_name, { # type: ignore
         'type': 'websocket.send',
         'text': json.dumps(result)
