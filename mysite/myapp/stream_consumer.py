@@ -6,6 +6,7 @@ except ImportError:
     from myapp.utils.redis_connection import redis_client
 
 from celery import chain
+import json
 
 def main():
     print('Starting stream consumer')
@@ -14,20 +15,21 @@ def main():
         messages = redis_client.xread({'diabetes_predictions': '$'}, block=1000, count=1)
 
         for complete_message in messages:  # type: ignore
-            # message is a list where the first element is the stream name (not needed),
+            # complete_message is a list where the first element is the stream name (not needed),
             # the second is a list of messages. each message is a tuple where the first element
             # is the message id, the second is the json data
             _, message_list = complete_message
             for concise_message in message_list:
-                _, data = concise_message
-                action = data.get(b'action').decode('utf-8')
-                api_key = data.get(b'api_key').decode('utf-8')
-                channel_name = data.get(b'channel_name').decode('utf-8')
+                _, data_bytes = concise_message
+                data = process_dict_bytes(data_bytes)
+                action = data.get('action')
+                api_key = data.get('api_key')
+                channel_name = data.get('channel_name')
                 isPrediction = action == 'predict_diabetes'
 
                 # Enqueue tasks based on the action
                 if isPrediction:
-                    numbers = data.get(b'data').decode('utf-8')
+                    numbers = data.get('data')
                     # here, numbers are the literal numbers to predict on
                     # Chain evaluate_api_key -> predict_diabetes -> process_task_result
                     task_chain = chain(
@@ -43,6 +45,14 @@ def main():
                         process_task_result.s(channel_name)
                     )
                     task_chain()       
+
+def process_dict_bytes(dict_bytes):
+    dict_str = {}
+    for key, value in dict_bytes.items():
+        key_str = key.decode('utf-8')
+        dict_str[key_str] = value.decode('utf-8')
+
+    return dict_str
 
 if __name__ == '__main__':
     main()

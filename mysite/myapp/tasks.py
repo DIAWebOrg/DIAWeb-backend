@@ -7,28 +7,18 @@ from celery import shared_task
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 import json
-# TODO: explain this
-try:
-    from utils.Serializer import Serializer
-except ImportError:
-    from myapp.utils.Serializer import Serializer
 
 @shared_task
-def predict_diabetes(data, remaining_requests):
-    serializer = Serializer(data=data)
-    if data and serializer.is_valid():
-        data = serializer.validated_data['data']  # type: ignore
-        data = np.array(data).astype('float32').reshape(1, -1)
-        prediction = settings.MODEL.predict(data)
-        # return the prediction alongside the remaining requests a a json
-        return json.dumps({'prediction': prediction.tolist(), 'remaining_requests': remaining_requests})
-    
-    else:
-        return {'error': 'Invalid data'}
+def predict_diabetes(result, data): 
+    data = np.array(json.loads(data)).astype('float32').reshape(1, -1)
+    prediction = settings.MODEL.predict(data)
+    print(type(prediction))
+    # prediction is a numpy array so we convert it to a list
+    # return the prediction alongside the remaining requests a a json
+    return {'prediction': prediction.tolist(), 'remaining_requests': result.get('remaining_requests')}
     
 @shared_task
 def evaluate_api_key(api_key, isPrediction):
-
     uuid_regex = re.compile(
         r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89ABab][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$')
 
