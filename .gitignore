@@ -1,5 +1,6 @@
 __pycache__
-/mysite/myapp/keras/
+/mysite/myapp/keras/base_dts.xlsx
+/mysite/myapp/keras/model.keras
 /mysite/mysite/.env
 /mysite/key.pem
 /mysite/cert.pem
