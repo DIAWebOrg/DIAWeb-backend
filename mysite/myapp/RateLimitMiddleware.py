@@ -13,8 +13,11 @@ class RateLimitMiddleware:
         return response
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        api_key = request.META.get('HTTP_X_API_KEY')
-        return None if api_key == os.getenv('API_KEY_TEST') else evaluate_api_key(api_key)
+        path = request.path
+        if path == '/predict_diabetes':
+            api_key = request.META.get('HTTP_X_API_KEY')
+            return None if api_key == os.getenv('API_KEY_TEST') else evaluate_api_key(api_key)
+        return None
 
 def evaluate_api_key(api_key):
     # Regex pattern for UUID

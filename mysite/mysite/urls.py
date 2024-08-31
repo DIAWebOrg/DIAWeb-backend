@@ -40,6 +40,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView.as_view(), name='index'),
     path('predict_diabetes', views.PredictDiabetesAPIView.as_view(), name='predict_diabetes'),
+    path('remaining_requests', views.RemainingRequests.as_view(), name='remaining_requests'),
     path('hello', views.HelloWorldView.as_view(), name='hello_world'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
