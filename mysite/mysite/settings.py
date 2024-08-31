@@ -12,8 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-from tensorflow.keras.models import load_model   # type: ignore
-import environ
+from tensorflow.keras.models import load_model  # type: ignore 
 from dotenv import load_dotenv
 import pandas as pd
 from corsheaders.defaults import default_headers
@@ -84,20 +83,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# Initialize environment variables
-env = environ.Env()
-
-# Read .env file
-environ.Env.read_env()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
